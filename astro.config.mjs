@@ -8,9 +8,6 @@ export default defineConfig({
   integrations: [tailwind()],
   output: 'server',
   adapter: cloudflare({
-    platformProxy: {
-      enabled: true
-    },
     imageService: 'compile'
   }),
   server: {
