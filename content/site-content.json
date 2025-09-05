@@ -65,8 +65,8 @@
     ]
   },
   "hero": {
-    "title": "Test Title Updated",
-    "subtitle": "Test Subtitle Updated",
+    "title": "Test Save Complete",
+    "subtitle": "Validation Fixed Successfully",
     "ctaButton": {
       "text": "Book Your Stay",
       "url": "https://lambcottage.campmanager.com/19567/Check-Availability/"
@@ -83,7 +83,7 @@
     }
   },
   "welcome": {
-    "title": "Welcome to Lamb Cottage",
+    "title": "Updated Welcome Section",
     "content": "Welcome to our award-winning adults-only caravan park, set in 7½ acres of meticulously maintained lawns and landscaped grounds in Cheshire's Vale Royal region. Surrounded by farmland and away from main roads, our tranquil location provides the perfect escape for a relaxing break.Our touring park is open from March until 2 January each year, offering 41 super pitches and 30 seasonal pitches. We accommodate caravans, motorhomes and privately owned holiday homes, with excellent facilities and easy access to Chester.✏️",
     "image": {
       "src": "/images/welcome-cottage.jpg",
@@ -294,6 +294,60 @@
     ],
     "copyright": "© 2025 Lamb Cottage Caravan Park. All rights reserved."
   },
+  "pages": {
+    "about": {
+      "title": "About Lamb Cottage Caravan Park",
+      "description": "Learn about our family-run caravan park and our commitment to providing exceptional countryside holidays.",
+      "hero": {
+        "title": "About Us",
+        "subtitle": "Discover the story behind Lamb Cottage Caravan Park",
+        "backgroundImage": {
+          "src": "",
+          "alt": "About us background",
+          "opacity": 0.4
+        }
+      }
+    },
+    "contact": {
+      "title": "Contact Lamb Cottage Caravan Park",
+      "description": "Get in touch with us for bookings, enquiries, or any questions about your stay.",
+      "hero": {
+        "title": "Contact Us",
+        "subtitle": "We're here to help with all your enquiries",
+        "backgroundImage": {
+          "src": "",
+          "alt": "Contact us background",
+          "opacity": 0.4
+        }
+      }
+    },
+    "facilities": {
+      "title": "Facilities at Lamb Cottage Caravan Park",
+      "description": "Discover all the amenities and facilities available during your stay with us.",
+      "hero": {
+        "title": "Our Facilities",
+        "subtitle": "Everything you need for a comfortable stay",
+        "backgroundImage": {
+          "src": "",
+          "alt": "Facilities background",
+          "opacity": 0.4
+        }
+      }
+    },
+    "static-caravans": {
+      "title": "Static Caravans for Sale",
+      "description": "Discover our selection of quality static caravans available for purchase.",
+      "hero": {
+        "title": "Static Caravans for Sale",
+        "subtitle": "Own your own piece of paradise",
+        "backgroundImage": {
+          "src": "",
+          "alt": "Static caravans background",
+          "opacity": 0.4
+        }
+      }
+    }
+  },
   "site_name": "Lamb Cottage Caravan Park",
   "site_description": "Award-winning adults-only caravan park in Cheshire",
   "social_media": {
@@ -303,7 +357,7 @@
   },
   "footer_logos": [],
   "_metadata": {
-    "lastUpdated": "2025-09-05T14:52:57.077Z",
-    "version": 1757083977077
+    "lastUpdated": "2025-09-05T15:33:59.768Z",
+    "version": 1757086439768
   }
 }

@@ -13,7 +13,13 @@ const ImageSchema = z.object({
   src: z.string().url().or(z.string().startsWith('/')).or(z.string().startsWith('#')),
   alt: z.string(),
   width: z.number().optional(),
-  height: z.number().optional()
+  height: z.number().optional(),
+  opacity: z.number().optional(),
+  dimensions: z.object({
+    width: z.number(),
+    height: z.number(),
+    recommended: z.string()
+  }).optional()
 });
 
 const LinkSchema = z.object({
@@ -72,9 +78,14 @@ const ContentSchema = z.object({
   }).optional(),
   hero: z.object({
     backgroundImage: z.object({
-      src: z.string().url().or(z.string().startsWith('/')).or(z.string().startsWith('#')),
+      src: z.string().url().or(z.string().startsWith('/')).or(z.string().startsWith('#')).or(z.literal('')),
       alt: z.string(),
-      opacity: z.number().optional()
+      opacity: z.number().optional(),
+      dimensions: z.object({
+        width: z.number(),
+        height: z.number(),
+        recommended: z.string()
+      }).optional()
     }).optional(),
     title: z.string(),
     subtitle: z.string(),
@@ -87,13 +98,14 @@ const ContentSchema = z.object({
   }).optional(),
   tagline: z.object({
     text: z.string(),
+    description: z.string().optional(),
     highlight: z.string()
   }).optional(),
   facilities: z.object({
     title: z.string(),
     subtitle: z.string(),
     backgroundImage: z.object({
-      src: z.string().url().or(z.string().startsWith('/')).or(z.string().startsWith('#')),
+      src: z.string().url().or(z.string().startsWith('/')).or(z.string().startsWith('#')).or(z.literal('')),
       alt: z.string(),
       opacity: z.number().optional()
     }).optional(),
@@ -104,7 +116,7 @@ const ContentSchema = z.object({
     subtitle: z.string(),
     description: z.string().optional(),
     backgroundImage: z.object({
-      src: z.string().url().or(z.string().startsWith('/')).or(z.string().startsWith('#')),
+      src: z.string().url().or(z.string().startsWith('/')).or(z.string().startsWith('#')).or(z.literal('')),
       alt: z.string(),
       opacity: z.number().optional()
     }).optional(),
@@ -128,7 +140,7 @@ const ContentSchema = z.object({
     subtitle: z.string(),
     description: z.string().optional(),
     backgroundImage: z.object({
-      src: z.string().url().or(z.string().startsWith('/')).or(z.string().startsWith('#')),
+      src: z.string().url().or(z.string().startsWith('/')).or(z.string().startsWith('#')).or(z.literal('')),
       alt: z.string(),
       opacity: z.number().optional()
     }).optional(),
@@ -154,7 +166,7 @@ const ContentSchema = z.object({
         title: z.string(),
         subtitle: z.string(),
         backgroundImage: z.object({
-          src: z.string().url().or(z.string().startsWith('/')).or(z.string().startsWith('#')),
+          src: z.string().url().or(z.string().startsWith('/')).or(z.string().startsWith('#')).or(z.literal('')),
           alt: z.string(),
           opacity: z.number().optional()
         }).optional()
@@ -165,7 +177,7 @@ const ContentSchema = z.object({
         title: z.string(),
         subtitle: z.string(),
         backgroundImage: z.object({
-          src: z.string().url().or(z.string().startsWith('/')).or(z.string().startsWith('#')),
+          src: z.string().url().or(z.string().startsWith('/')).or(z.string().startsWith('#')).or(z.literal('')),
           alt: z.string(),
           opacity: z.number().optional()
         }).optional()
@@ -176,7 +188,7 @@ const ContentSchema = z.object({
         title: z.string(),
         subtitle: z.string(),
         backgroundImage: z.object({
-          src: z.string().url().or(z.string().startsWith('/')).or(z.string().startsWith('#')),
+          src: z.string().url().or(z.string().startsWith('/')).or(z.string().startsWith('#')).or(z.literal('')),
           alt: z.string(),
           opacity: z.number().optional()
         }).optional()
@@ -187,7 +199,7 @@ const ContentSchema = z.object({
         title: z.string(),
         subtitle: z.string(),
         backgroundImage: z.object({
-          src: z.string().url().or(z.string().startsWith('/')).or(z.string().startsWith('#')),
+          src: z.string().url().or(z.string().startsWith('/')).or(z.string().startsWith('#')).or(z.literal('')),
           alt: z.string(),
           opacity: z.number().optional()
         }).optional()
@@ -198,7 +210,7 @@ const ContentSchema = z.object({
         title: z.string(),
         subtitle: z.string(),
         backgroundImage: z.object({
-          src: z.string().url().or(z.string().startsWith('/')).or(z.string().startsWith('#')),
+          src: z.string().url().or(z.string().startsWith('/')).or(z.string().startsWith('#')).or(z.literal('')),
           alt: z.string(),
           opacity: z.number().optional()
         }).optional()
@@ -209,7 +221,7 @@ const ContentSchema = z.object({
         title: z.string(),
         subtitle: z.string(),
         backgroundImage: z.object({
-          src: z.string().url().or(z.string().startsWith('/')).or(z.string().startsWith('#')),
+          src: z.string().url().or(z.string().startsWith('/')).or(z.string().startsWith('#')).or(z.literal('')),
           alt: z.string(),
           opacity: z.number().optional()
         }).optional()
@@ -220,7 +232,7 @@ const ContentSchema = z.object({
         title: z.string(),
         subtitle: z.string(),
         backgroundImage: z.object({
-          src: z.string().url().or(z.string().startsWith('/')).or(z.string().startsWith('#')),
+          src: z.string().url().or(z.string().startsWith('/')).or(z.string().startsWith('#')).or(z.literal('')),
           alt: z.string(),
           opacity: z.number().optional()
         }).optional()
@@ -231,7 +243,7 @@ const ContentSchema = z.object({
         title: z.string(),
         subtitle: z.string(),
         backgroundImage: z.object({
-          src: z.string().url().or(z.string().startsWith('/')).or(z.string().startsWith('#')),
+          src: z.string().url().or(z.string().startsWith('/')).or(z.string().startsWith('#')).or(z.literal('')),
           alt: z.string(),
           opacity: z.number().optional()
         }).optional()
@@ -242,7 +254,7 @@ const ContentSchema = z.object({
         title: z.string(),
         subtitle: z.string(),
         backgroundImage: z.object({
-          src: z.string().url().or(z.string().startsWith('/')).or(z.string().startsWith('#')),
+          src: z.string().url().or(z.string().startsWith('/')).or(z.string().startsWith('#')).or(z.literal('')),
           alt: z.string(),
           opacity: z.number().optional()
         }).optional()
