@@ -276,10 +276,30 @@ export class CloudflareStorage {
         }
       };
 
-      // In a server environment, we can't directly write files
-      // So we'll return success and log the content
-      console.log('Content would be saved to local file:', JSON.stringify(contentWithMetadata, null, 2));
-      return { success: true };
+      // In development, save to the actual content file
+      try {
+        const fs = await import('node:fs/promises');
+        const path = await import('node:path');
+        
+        // Get the project root directory
+        const projectRoot = process.cwd();
+        const contentPath = path.join(projectRoot, 'content', 'site-content.json');
+        
+        // Ensure content directory exists
+        const contentDir = path.dirname(contentPath);
+        await fs.mkdir(contentDir, { recursive: true });
+        
+        // Write the content file
+        await fs.writeFile(contentPath, JSON.stringify(contentWithMetadata, null, 2), 'utf-8');
+        
+        console.log('Content saved to:', contentPath);
+        return { success: true };
+      } catch (fsError) {
+        console.error('Failed to write to file system:', fsError);
+        // Fallback to logging
+        console.log('Content would be saved to local file:', JSON.stringify(contentWithMetadata, null, 2));
+        return { success: true };
+      }
     } catch (error) {
       console.error('Failed to save to local file:', error);
       return {
@@ -292,10 +312,43 @@ export class CloudflareStorage {
   // Load from local file (development fallback)
   private async loadFromLocalFile(): Promise<any> {
     try {
-      // In development, we'll just return default content
-      // In a real implementation, this would read from a local file
-      console.log('Loading default content as local file fallback');
-      return this.getDefaultContent();
+      // Try to read from the actual content files
+      const fs = await import('node:fs/promises');
+      const path = await import('node:path');
+      
+      const projectRoot = process.cwd();
+      const contentPath = path.join(projectRoot, 'content', 'site-content.json');
+      const settingsPath = path.join(projectRoot, 'content', 'site-settings.json');
+      
+      let content = {};
+      let settings = {};
+      
+      // Try to load site-content.json
+      try {
+        const contentData = await fs.readFile(contentPath, 'utf-8');
+        content = JSON.parse(contentData);
+        console.log('Loaded content from:', contentPath);
+      } catch (contentError) {
+        console.warn('Could not load site-content.json:', contentError.message);
+      }
+      
+      // Try to load site-settings.json
+      try {
+        const settingsData = await fs.readFile(settingsPath, 'utf-8');
+        settings = JSON.parse(settingsData);
+        console.log('Loaded settings from:', settingsPath);
+      } catch (settingsError) {
+        console.warn('Could not load site-settings.json:', settingsError.message);
+      }
+      
+      // Merge content and settings, with content taking priority
+      const mergedContent = {
+        ...this.getDefaultContent(),
+        ...settings,
+        ...content
+      };
+      
+      return mergedContent;
     } catch (error) {
       console.error('Failed to load from local file:', error);
       return this.getDefaultContent();

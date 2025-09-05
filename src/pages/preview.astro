@@ -442,8 +442,9 @@ const isPreview = Astro.url.searchParams.has('preview');
 </script>}
 
 <!-- Load SecurityManager for visual editor functionality -->
+{isPreview && <script src="/client-security-v2.js" is:inline></script>}
 {isPreview && <script type="module">
-  import { SecurityManager } from '/client-security.js';
+  // SecurityManager is now loaded from the inline script
   window.securityManager = new SecurityManager();
 </script>}
 

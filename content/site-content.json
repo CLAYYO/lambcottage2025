@@ -85,6 +85,11 @@
     "title": "Static Caravans for Sale",
     "subtitle": "Own your own piece of paradise",
     "description": "Discover our exclusive selection of luxury static caravans available for purchase.",
+    "backgroundImage": {
+      "src": "",
+      "alt": "Property sales background",
+      "opacity": 0.4
+    },
     "properties": [
       {
         "id": "luxury-caravan-1",
@@ -100,7 +105,7 @@
           "Private parking"
         ],
         "image": {
-          "src": "/static-caravans/luxury-1-exterior.jpg",
+          "src": "/images/property-placeholder.jpg",
           "alt": "Luxury Static Caravan - Plot 15 exterior view"
         },
         "available": true
@@ -120,7 +125,7 @@
           "Parking space"
         ],
         "image": {
-          "src": "/static-caravans/premium-2-exterior.jpg",
+          "src": "/images/property-placeholder.jpg",
           "alt": "Premium Static Caravan - Plot 22 exterior view"
         },
         "available": true

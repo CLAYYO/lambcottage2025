@@ -1,6 +1,7 @@
 ---
 import AdminLayout from '../../layouts/AdminLayout.astro';
 import VisualEditor from '../../components/VisualEditor.astro';
+import BackgroundImageUpload from '../../components/BackgroundImageUpload.astro';
 import { contentStorage } from '../../lib/content-storage';
 import { requireAdminAuth } from '../../middleware/auth';
 
@@ -126,8 +127,7 @@ const pageList = [
               <div class="form-group">
                 <label class="form-label">Hero Background Image</label>
                 <div class="image-upload-container">
-                  <VisualEditor 
-                    type="image" 
+                  <BackgroundImageUpload 
                     sectionId="pages" 
                     fieldPath={`${page.key}.hero.backgroundImage.src`} 
                     content={pageData.hero?.backgroundImage?.src || ''}

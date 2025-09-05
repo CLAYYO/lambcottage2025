@@ -1,6 +1,8 @@
 ---
+export const prerender = true;
+
 import BaseLayout from '../layouts/BaseLayout.astro';
-import siteContent from '../../content/site-content.json';
+import galleryContent from '../../content/pages/gallery.json';
 
 // Placeholder images - these can be replaced with actual images when available
 const heroImage = 'https://via.placeholder.com/800x600/22c55e/ffffff?text=Lamb+Cottage+Main+View';
@@ -8,12 +10,12 @@ const springImage = 'https://via.placeholder.com/400x300/22c55e/ffffff?text=Spri
 const dogWalkingImage = 'https://via.placeholder.com/400x300/22c55e/ffffff?text=Dog+Walking+Area';
 const dogTrackImage = 'https://via.placeholder.com/400x300/22c55e/ffffff?text=Dog+Walking+Track';
 
-const pageContent = siteContent.pages.gallery;
+const pageContent = galleryContent;
 ---
 
 <BaseLayout 
-  title={pageContent.meta.title}
-  description={pageContent.meta.description}
+  title={pageContent.title}
+  description={pageContent.description}
 >
   <main class="min-h-screen bg-gradient-to-b from-green-50 to-white">
     <!-- Hero Section -->
@@ -260,7 +262,7 @@ const pageContent = siteContent.pages.gallery;
     const galleryItems = document.querySelectorAll('.gallery-item');
     
     galleryItems.forEach(item => {
-      item.addEventListener('click', function() {
+      item.addEventListener('click', function(this: HTMLElement) {
         const img = this.querySelector('img');
         if (img) {
           // Create lightbox overlay
@@ -277,7 +279,7 @@ const pageContent = siteContent.pages.gallery;
           
           // Add close functionality
           overlay.addEventListener('click', function(e) {
-            if (e.target === overlay || e.target.tagName === 'BUTTON') {
+            if (e.target === overlay || (e.target && (e.target as HTMLElement).tagName === 'BUTTON')) {
               document.body.removeChild(overlay);
             }
           });

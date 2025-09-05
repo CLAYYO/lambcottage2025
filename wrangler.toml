@@ -20,6 +20,11 @@ binding = "IMAGES_R2"
 bucket_name = "lamb-cottage-images"
 preview_bucket_name = "lamb-cottage-images-preview"
 
+# Assets binding for static files
+[assets]
+binding = "ASSETS"
+directory = "./dist"
+
 # Environment variables for production
 # Note: These should be configured in Cloudflare Pages dashboard
 # JWT_SECRET = "your-production-jwt-secret"

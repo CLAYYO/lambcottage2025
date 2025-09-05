@@ -1,0 +1,41 @@
+# JavaScript files
+/client-security-v2.js
+  Content-Type: application/javascript
+  X-Content-Type-Options: nosniff
+  Cache-Control: public, max-age=31536000, immutable
+
+/lib/url-utils-v2.js
+  Content-Type: application/javascript
+  X-Content-Type-Options: nosniff
+  Cache-Control: public, max-age=31536000, immutable
+
+# CSS files
+*.css
+  Content-Type: text/css
+  X-Content-Type-Options: nosniff
+  Cache-Control: public, max-age=31536000, immutable
+
+# Image files
+*.jpg
+  Content-Type: image/jpeg
+  Cache-Control: public, max-age=31536000, immutable
+
+*.jpeg
+  Content-Type: image/jpeg
+  Cache-Control: public, max-age=31536000, immutable
+
+*.png
+  Content-Type: image/png
+  Cache-Control: public, max-age=31536000, immutable
+
+*.gif
+  Content-Type: image/gif
+  Cache-Control: public, max-age=31536000, immutable
+
+*.webp
+  Content-Type: image/webp
+  Cache-Control: public, max-age=31536000, immutable
+
+*.svg
+  Content-Type: image/svg+xml
+  Cache-Control: public, max-age=31536000, immutable

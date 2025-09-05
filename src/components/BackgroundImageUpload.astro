@@ -1,4 +1,5 @@
 ---
+// Use dynamic import for the renamed file
 import { normalizeImageUrl } from '../lib/url-utils';
 
 export interface Props {
@@ -6,10 +7,11 @@ export interface Props {
   fieldPath: string;
   content: string;
   className?: string;
+  id?: string;
 }
 
-const { sectionId, fieldPath, content, className = '' } = Astro.props;
-const uploadId = `${sectionId}-${fieldPath.replace(/\./g, '-')}`;
+const { sectionId, fieldPath, content, className = '', id } = Astro.props;
+const uploadId = id || `${sectionId}-${fieldPath.replace(/\./g, '-')}`;
 const imageUrl = normalizeImageUrl(content);
 ---
 
@@ -61,6 +63,9 @@ const imageUrl = normalizeImageUrl(content);
       </button>
     )}
   </div>
+  
+  <!-- Error Display -->
+  <div class="error-message" id={`error-${uploadId}`} style="display: none;"></div>
 
   <!-- Hidden input to store the current value -->
   <input 
@@ -134,11 +139,30 @@ const imageUrl = normalizeImageUrl(content);
   .preview-image {
     border: 1px solid #e5e7eb;
   }
+  
+  .error-message {
+    background: #fef2f2;
+    border: 1px solid #fecaca;
+    color: #dc2626;
+    padding: 0.75rem;
+    border-radius: 6px;
+    margin-top: 0.5rem;
+    font-size: 0.875rem;
+  }
 </style>
 
 <script is:inline>
-  // Import URL utilities
-  const { normalizeImageUrl, toRelativeUrl } = await import('/src/lib/url-utils.js');
+  // Initialize URL utilities only once globally
+  if (!window.backgroundImageUtils) {
+    window.backgroundImageUtils = {};
+    
+    // Load utilities asynchronously
+    (async () => {
+      const utils = await import('../lib/url-utils-v2.js');
+      window.backgroundImageUtils.normalizeImageUrl = utils.normalizeImageUrl;
+      window.backgroundImageUtils.toRelativeUrl = utils.toRelativeUrl;
+    })();
+  }
   
   // Handle file upload
   document.addEventListener('change', async function(e) {
@@ -148,22 +172,37 @@ const imageUrl = normalizeImageUrl(content);
       const file = fileInput.files && fileInput.files[0];
       
       if (file) {
-        const formData = new FormData();
-        formData.append('file', file);
-        
         // Show loading state
         const uploadBtn = fileInput.parentElement && fileInput.parentElement.querySelector('.upload-btn');
         if (!uploadBtn) return;
         
         const originalText = uploadBtn.textContent || '';
-        uploadBtn.textContent = 'Uploading...';
+        uploadBtn.textContent = 'Validating...';
         uploadBtn.disabled = true;
+        
+        // Clear any previous error messages
+        const errorDiv = document.getElementById(`error-${fileInput.id}`);
+        if (errorDiv) {
+          errorDiv.style.display = 'none';
+        }
         
         try {
           // Wait for securityManager to be available
           while (!window.securityManager) {
             await new Promise(resolve => setTimeout(resolve, 100));
           }
+          
+          // Validate file on client-side first
+          const validation = window.securityManager.validateFile(file);
+          if (!validation.valid) {
+            throw new Error(validation.error);
+          }
+          
+          // File is valid, proceed with upload
+          const formData = new FormData();
+          formData.append('file', file);
+          
+          uploadBtn.textContent = 'Uploading...';
           
           // Upload the image using direct fetch for FormData
           // Get CSRF tokens manually for FormData uploads
@@ -212,7 +251,7 @@ const imageUrl = normalizeImageUrl(content);
               // Add a small delay to allow the dev server to recognize the new file
               setTimeout(() => {
                 // Update preview with consistent URL handling using utility function
-                const displayUrl = normalizeImageUrl(imageUrl);
+                const displayUrl = window.backgroundImageUtils.normalizeImageUrl ? window.backgroundImageUtils.normalizeImageUrl(imageUrl) : imageUrl;
                 preview.innerHTML = `
                   <img 
                     src="${displayUrl}" 
@@ -223,7 +262,7 @@ const imageUrl = normalizeImageUrl(content);
                 `;
                 
                 // Update hidden input with relative URL for cross-environment compatibility
-                hiddenInput.value = toRelativeUrl(imageUrl);
+                hiddenInput.value = window.backgroundImageUtils.toRelativeUrl ? window.backgroundImageUtils.toRelativeUrl(imageUrl) : imageUrl;
                 
                 // Update button text
                 uploadBtn.textContent = 'Change Image';
@@ -257,7 +296,18 @@ const imageUrl = normalizeImageUrl(content);
             stack: error.stack,
             error: error
           });
-          alert('Upload failed: ' + (error && error.message ? error.message : 'Unknown error'));
+          
+          // Show error message in the error div instead of alert
+          const errorDiv = document.getElementById(`error-${fileInput.id}`);
+          if (errorDiv) {
+            errorDiv.textContent = 'Upload failed: ' + (error && error.message ? error.message : 'Unknown error');
+            errorDiv.style.display = 'block';
+            
+            // Hide error message after 5 seconds
+            setTimeout(() => {
+              errorDiv.style.display = 'none';
+            }, 5000);
+          }
         } finally {
           uploadBtn.textContent = originalText;
           uploadBtn.disabled = false;

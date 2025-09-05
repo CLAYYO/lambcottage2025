@@ -50,7 +50,12 @@ function base64urlUnescape(str: string): string {
 }
 
 function base64urlDecode(str: string): Uint8Array {
-  return new Uint8Array(Array.from(atob(base64urlUnescape(str)), c => c.charCodeAt(0)));
+  const binaryString = atob(base64urlUnescape(str));
+  const bytes = new Uint8Array(binaryString.length);
+  for (let i = 0; i < binaryString.length; i++) {
+    bytes[i] = binaryString.charCodeAt(i);
+  }
+  return bytes;
 }
 
 function base64urlEncode(buffer: ArrayBuffer): string {
@@ -145,7 +150,9 @@ export async function verifyToken(token: string, context?: APIContext): Promise<
     );
     
     const signature = base64urlDecode(encodedSignature);
-    const isValid = await crypto.subtle.verify('HMAC', key, signature, new TextEncoder().encode(data));
+    const dataBytes = new TextEncoder().encode(data);
+    // @ts-ignore - TypeScript compatibility issue with crypto.subtle.verify BufferSource type
+    const isValid = await crypto.subtle.verify('HMAC', key, signature, dataBytes);
     
     if (!isValid) return null;
     

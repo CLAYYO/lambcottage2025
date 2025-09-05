@@ -186,7 +186,8 @@ if (authResult) {
   </div>
 
   <script type="module">
-    import { SecurityManager } from '/client-security.js';
+    // Use the inline script version instead
+// import { SecurityManager } from '../../lib/client-security.ts';
     window.securityManager = new SecurityManager();
   </script>
   <script is:inline>

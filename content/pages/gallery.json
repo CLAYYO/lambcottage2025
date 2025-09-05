@@ -1,0 +1,28 @@
+{
+  "title": "Photo Gallery - Lamb Cottage Caravan Park",
+  "description": "Browse our photo gallery to see the beautiful facilities and surroundings at Lamb Cottage.",
+  "hero": {
+    "title": "Photo Gallery",
+    "subtitle": "See the beauty of Lamb Cottage Caravan Park",
+    "backgroundImage": {
+      "src": "",
+      "alt": "Gallery background",
+      "opacity": 0.4
+    }
+  },
+  "content": {
+    "introduction": {
+      "title": "Photo Gallery",
+      "content": "Take a visual tour of our park and see what makes Lamb Cottage special."
+    },
+    "photo_info": "Our gallery showcases the facilities, accommodation, and beautiful surroundings.",
+    "update_info": "We regularly update our gallery with new photos throughout the seasons.",
+    "features": {
+      "title": "Park Features"
+    },
+    "additionalInfo": {
+      "title": "Visit Our Gallery",
+      "content": "Experience the beauty and tranquility of Lamb Cottage Caravan Park through our photo gallery. From our meticulously maintained grounds to our luxury facilities, see why we're the perfect choice for your next getaway."
+    }
+  }
+}

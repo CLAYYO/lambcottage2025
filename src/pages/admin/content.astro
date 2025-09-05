@@ -18,6 +18,9 @@ const content = await getContent();
 ---
 
 <AdminLayout title="Content Editor">
+  <!-- Load SecurityManager for background image uploads -->
+  <script src="/client-security-v2.js" is:inline></script>
+  
   <div class="content-editor">
     <div class="editor-header">
       <h1>Content Editor</h1>
@@ -36,6 +39,9 @@ const content = await getContent();
         <h3>Page Sections</h3>
         <nav class="section-list">
           <button class="section-btn active" data-section="hero">Hero Section</button>
+          <button class="section-btn" data-section="topbar">Top Bar</button>
+          <button class="section-btn" data-section="header">Header</button>
+          <button class="section-btn" data-section="navigation">Navigation</button>
           <button class="section-btn" data-section="welcome">Welcome</button>
           <button class="section-btn" data-section="tagline">Tagline</button>
           <button class="section-btn" data-section="facilities">Facilities</button>
@@ -69,6 +75,7 @@ const content = await getContent();
           <div class="form-group">
             <label for="hero-subtitle">Subtitle</label>
             <VisualEditor 
+              id="hero-subtitle"
               sectionId="hero" 
               fieldPath="subtitle" 
               content={content.hero.subtitle} 
@@ -80,6 +87,7 @@ const content = await getContent();
           <div class="form-group">
             <label for="hero-cta">Call to Action Button Text</label>
             <VisualEditor 
+              id="hero-cta"
               sectionId="hero" 
               fieldPath="ctaButton.text" 
               content={content.hero.ctaButton?.text || ''} 
@@ -92,6 +100,7 @@ const content = await getContent();
             <label for="hero-image">Background Image</label>
             <div class="image-upload-container">
               <BackgroundImageUpload 
+                id="hero-image"
                 sectionId="hero" 
                 fieldPath="backgroundImage.src" 
                 content={content.hero.backgroundImage?.src || ''} 
@@ -106,6 +115,7 @@ const content = await getContent();
             <label for="hero-opacity">Background Opacity</label>
             <div class="opacity-control">
               <VisualEditor 
+                id="hero-opacity"
                 sectionId="hero" 
                 fieldPath="backgroundImage.opacity" 
                 content={content.hero.backgroundImage?.opacity || 0.4} 
@@ -116,6 +126,119 @@ const content = await getContent();
                 step="0.1"
               />
               <span class="opacity-value">{Math.round((content.hero.backgroundImage?.opacity || 0.4) * 100)}%</span>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Top Bar Section Editor -->
+        <div class="section-editor" id="topbar-editor">
+          <div class="section-header">
+            <h2 class="section-title">Top Bar Section</h2>
+            <p class="section-description">Edit the top navigation bar content</p>
+          </div>
+          
+          <div class="form-group">
+            <label class="form-label">Phone Number</label>
+            <VisualEditor 
+              type="text" 
+              sectionId="topBar" 
+              fieldPath="phone" 
+              content={content.topBar.phone} 
+            />
+          </div>
+          
+          <div class="form-group">
+            <label class="form-label">Email Address</label>
+            <VisualEditor 
+              type="text" 
+              sectionId="topBar" 
+              fieldPath="email" 
+              content={content.topBar.email} 
+            />
+          </div>
+        </div>
+        
+        <!-- Header Section Editor -->
+        <div class="section-editor" id="header-editor">
+          <div class="section-header">
+            <h2 class="section-title">Header Section</h2>
+            <p class="section-description">Edit the main header and logo</p>
+          </div>
+          
+          <div class="form-group">
+            <label class="form-label">Site Title</label>
+            <VisualEditor 
+              type="text" 
+              sectionId="header" 
+              fieldPath="title" 
+              content={content.header.title} 
+            />
+          </div>
+          
+          <div class="form-group">
+            <label class="form-label">Logo Image</label>
+            <VisualEditor 
+              type="image" 
+              sectionId="header" 
+              fieldPath="logo.src" 
+              content={content.header.logo?.src || ''} 
+            />
+          </div>
+          
+          <div class="form-group">
+            <label class="form-label">Logo Alt Text</label>
+            <VisualEditor 
+              type="text" 
+              sectionId="header" 
+              fieldPath="logo.alt" 
+              content={content.header.logo?.alt || ''} 
+            />
+          </div>
+        </div>
+        
+        <!-- Navigation Section Editor -->
+        <div class="section-editor" id="navigation-editor">
+          <div class="section-header">
+            <h2 class="section-title">Navigation Section</h2>
+            <p class="section-description">Edit the main navigation menu links</p>
+          </div>
+          
+          <div class="form-group">
+            <label class="form-label">Navigation Links</label>
+            <div class="navigation-list">
+              {(content.navigation?.links || []).map((link: any, index: number) => (
+                <div class="navigation-item border border-gray-200 rounded-lg p-4 mb-4">
+                  <div class="grid grid-cols-3 gap-4">
+                    <div>
+                      <label class="form-label text-sm">Link Text</label>
+                      <VisualEditor 
+                        type="text" 
+                        sectionId="navigation" 
+                        fieldPath={`links.${index}.text`} 
+                        content={link.text} 
+                      />
+                    </div>
+                    <div>
+                      <label class="form-label text-sm">Link URL</label>
+                      <VisualEditor 
+                        type="text" 
+                        sectionId="navigation" 
+                        fieldPath={`links.${index}.url`} 
+                        content={link.url} 
+                      />
+                    </div>
+                    <div>
+                      <label class="form-label text-sm">External Link</label>
+                      <VisualEditor 
+                        type="checkbox" 
+                        sectionId="navigation" 
+                        fieldPath={`links.${index}.external`} 
+                        content={link.external || false} 
+                      />
+                    </div>
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
         </div>
@@ -172,6 +295,16 @@ const content = await getContent();
               sectionId="tagline" 
               fieldPath="text" 
               content={content.tagline.text} 
+            />
+          </div>
+          
+          <div class="form-group">
+            <label class="form-label">Description</label>
+            <VisualEditor 
+              type="textarea" 
+              sectionId="tagline" 
+              fieldPath="description" 
+              content={content.tagline.description} 
             />
           </div>
           
@@ -247,16 +380,16 @@ const content = await getContent();
           <div class="form-group">
             <label class="form-label">Facilities List</label>
             <div class="facilities-list">
-              {Object.values(content.facilities.items || {}).map((facility: any, index: number) => (
+              {(content.facilities.items || []).map((facility: any, index: number) => (
                 <div class="facility-item border border-gray-200 rounded-lg p-4 mb-4">
-                  <div class="grid grid-cols-2 gap-4">
+                  <div class="grid grid-cols-3 gap-4">
                     <div>
-                      <label class="form-label text-sm">Facility Name</label>
+                      <label class="form-label text-sm">Facility Title</label>
                       <VisualEditor 
                         type="text" 
                         sectionId="facilities" 
-                        fieldPath={`items.${index}.name`} 
-                        content={facility.name} 
+                        fieldPath={`items.${index}.title`} 
+                        content={facility.title} 
                       />
                     </div>
                     <div>
@@ -266,6 +399,16 @@ const content = await getContent();
                         sectionId="facilities" 
                         fieldPath={`items.${index}.description`} 
                         content={facility.description} 
+                      />
+                    </div>
+                    <div>
+                      <label class="form-label text-sm">Icon</label>
+                      <VisualEditor 
+                        type="text" 
+                        sectionId="facilities" 
+                        fieldPath={`items.${index}.icon`} 
+                        content={facility.icon} 
+                        placeholder="🚿"
                       />
                     </div>
                   </div>
@@ -300,6 +443,37 @@ const content = await getContent();
               fieldPath="subtitle" 
               content={content.propertySales.subtitle} 
             />
+          </div>
+          
+          <div class="form-group">
+            <label for="property-image">Background Image</label>
+            <div class="image-upload-container">
+              <BackgroundImageUpload 
+                sectionId="propertySales" 
+                fieldPath="backgroundImage.src" 
+                content={content.propertySales.backgroundImage?.src || ''} 
+                className="image-preview"
+              />
+              <div class="image-specs">
+                <small class="text-gray-600">Recommended size: 1920x600px</small>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="property-opacity">Background Opacity</label>
+            <div class="opacity-control">
+              <VisualEditor 
+                sectionId="propertySales" 
+                fieldPath="backgroundImage.opacity" 
+                content={content.propertySales.backgroundImage?.opacity || 0.4} 
+                type="range" 
+                className="opacity-slider"
+                min="0" 
+                max="1" 
+                step="0.1"
+              />
+              <span class="opacity-value">{Math.round((content.propertySales.backgroundImage?.opacity || 0.4) * 100)}%</span>
+            </div>
           </div>
           
           <div class="form-group">
@@ -346,15 +520,20 @@ const content = await getContent();
                       placeholder="Enter features, one per line"
                     />
                   </div>
-                  <div class="grid grid-cols-2 gap-4">
+                  <div class="grid grid-cols-1 gap-4">
                     <div>
-                      <label class="form-label text-sm">Property Image URL</label>
-                      <VisualEditor 
-                        type="image" 
-                        sectionId="propertySales" 
-                        fieldPath={`properties.${index}.image.src`} 
-                        content={property.image?.src || ''} 
-                      />
+                      <label class="form-label text-sm">Property Image</label>
+                      <div class="image-upload-container">
+                        <BackgroundImageUpload 
+                          sectionId="propertySales" 
+                          fieldPath={`properties.${index}.image.src`} 
+                          content={property.image?.src || ''} 
+                          className="image-preview"
+                        />
+                        <div class="image-specs">
+                          <small class="text-gray-600">Recommended size: 800x600px</small>
+                        </div>
+                      </div>
                     </div>
                     <div>
                       <label class="form-label text-sm">Image Alt Text</label>
@@ -413,9 +592,9 @@ const content = await getContent();
           <div class="form-group">
             <label class="form-label">Customer Reviews</label>
             <div class="reviews-list">
-              {Object.values(content.reviews.items || {}).map((review: any, index: number) => (
+              {(content.reviews.items || []).map((review: any, index: number) => (
                 <div class="review-item border border-gray-200 rounded-lg p-4 mb-4">
-                  <div class="grid grid-cols-2 gap-4 mb-4">
+                  <div class="grid grid-cols-3 gap-4 mb-4">
                     <div>
                       <label class="form-label text-sm">Customer Name</label>
                       <VisualEditor 
@@ -426,22 +605,42 @@ const content = await getContent();
                       />
                     </div>
                     <div>
-                      <label class="form-label text-sm">Rating (1-5)</label>
+                      <label class="form-label text-sm">Location</label>
                       <VisualEditor 
                         type="text" 
                         sectionId="reviews" 
+                        fieldPath={`items.${index}.location`} 
+                        content={review.location} 
+                      />
+                    </div>
+                    <div>
+                      <label class="form-label text-sm">Rating (1-5)</label>
+                      <VisualEditor 
+                        type="number" 
+                        sectionId="reviews" 
                         fieldPath={`items.${index}.rating`} 
                         content={review.rating.toString()} 
+                        min="1" 
+                        max="5"
                       />
                     </div>
                   </div>
                   <div class="mb-4">
-                    <label class="form-label text-sm">Review Text</label>
+                    <label class="form-label text-sm">Review Title</label>
+                    <VisualEditor 
+                      type="text" 
+                      sectionId="reviews" 
+                      fieldPath={`items.${index}.title`} 
+                      content={review.title} 
+                    />
+                  </div>
+                  <div class="mb-4">
+                    <label class="form-label text-sm">Review Comment</label>
                     <VisualEditor 
                       type="textarea" 
                       sectionId="reviews" 
-                      fieldPath={`items.${index}.text`} 
-                      content={review.text} 
+                      fieldPath={`items.${index}.comment`} 
+                      content={review.comment} 
                     />
                   </div>
                   <div>
@@ -483,6 +682,16 @@ const content = await getContent();
               sectionId="bookingBanner" 
               fieldPath="subtitle" 
               content={content.bookingBanner.subtitle} 
+            />
+          </div>
+          
+          <div class="form-group">
+            <label class="form-label">Banner Description</label>
+            <VisualEditor 
+              type="textarea" 
+              sectionId="bookingBanner" 
+              fieldPath="description" 
+              content={content.bookingBanner.description} 
             />
           </div>
           
@@ -1516,8 +1725,11 @@ const content = await getContent();
   </style>
 
   <script is:inline>
-    // Section navigation
-    document.querySelectorAll('.section-btn').forEach(btn => {
+    document.addEventListener('DOMContentLoaded', function() {
+      // Section navigation
+      const sectionButtons = document.querySelectorAll('.section-btn');
+    
+    sectionButtons.forEach(btn => {
       btn.addEventListener('click', () => {
         // Remove active class from all buttons and editors
         document.querySelectorAll('.section-btn').forEach(b => b.classList.remove('active'));
@@ -1525,8 +1737,32 @@ const content = await getContent();
         
         // Add active class to clicked button and corresponding editor
         btn.classList.add('active');
-        const sectionId = btn.dataset.section + '-editor';
-        document.getElementById(sectionId).classList.add('active');
+        
+        // Map button data-section values to actual editor IDs
+        const sectionMap = {
+          'hero': 'hero-editor',
+          'topbar': 'topbar-editor',
+          'header': 'header-editor',
+          'navigation': 'navigation-editor',
+          'welcome': 'welcome-editor', 
+          'tagline': 'tagline-editor',
+          'facilities': 'facilities-editor',
+          'property': 'property-editor',
+          'reviews': 'reviews-editor',
+          'booking': 'booking-editor',
+          'contact': 'contact-editor',
+          'pages': 'pages-editor',
+          'footer': 'footer-editor'
+        };
+        
+        const section = btn.dataset.section;
+        const editorId = sectionMap[section];
+        if (editorId) {
+          const editor = document.getElementById(editorId);
+          if (editor) {
+            editor.classList.add('active');
+          }
+        }
       });
     });
     
@@ -1811,12 +2047,7 @@ const content = await getContent();
         }
       });
     }
-  </script>
-  
-  <!-- Load SecurityManager for background image uploads -->
-  <script type="module">
-    import { SecurityManager } from '/client-security.js';
-    window.securityManager = new SecurityManager();
+    }); // Close DOMContentLoaded
   </script>
   
   <!-- Background image upload functionality is now handled by BackgroundImageUpload components -->

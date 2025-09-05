@@ -1,9 +1,9 @@
 ---
 // Visual Editor Component for Admin Interface
-const { type, sectionId, fieldPath, content, placeholder, className, min, max, step } = Astro.props;
+const { type, sectionId, fieldPath, content, placeholder, className, min, max, step, id } = Astro.props;
 
-// Generate unique ID for this editor instance
-const editorId = `editor-${sectionId}-${fieldPath ? fieldPath.replace(/\./g, '-') : 'field'}-${Math.random().toString(36).substr(2, 9)}`;
+// Use provided ID or generate unique ID for this editor instance
+const editorId = id || `editor-${sectionId}-${fieldPath ? fieldPath.replace(/\./g, '-') : 'field'}-${Math.random().toString(36).substr(2, 9)}`;
 ---
 
 {type === 'image' && (
