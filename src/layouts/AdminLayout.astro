@@ -251,7 +251,14 @@ const { title, description = 'Lamb Cottage CMS Admin Panel' } = Astro.props;
       </main>
     </div>
 
+    <!-- Load security manager for admin functionality -->
+    <script src="/client-security-v2.js" is:inline></script>
     <script>
+      // Initialize security manager for admin pages
+      if (typeof SecurityManager !== 'undefined') {
+        window.securityManager = new SecurityManager();
+      }
+      
       // Highlight active nav item
       const currentPath = window.location.pathname;
       const navLinks = document.querySelectorAll('.nav-link');

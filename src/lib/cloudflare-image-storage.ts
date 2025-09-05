@@ -156,9 +156,14 @@ export class CloudflareImageStorage {
                                (globalThis as any).ASSETS !== undefined;
       
       // Only use local fallback in true development environment (localhost)
-      const isLocalDevelopment = typeof process !== 'undefined' && 
-                                process.env.NODE_ENV === 'development' &&
-                                !isCloudflarePages;
+      // Check for Astro dev mode or local development
+      // Force local development if no baseUrl is configured (no R2 public URL)
+      const isLocalDevelopment = (typeof process !== 'undefined' && 
+                                  (process.env.NODE_ENV === 'development' || 
+                                   process.env.NODE_ENV === undefined || 
+                                   process.env.NODE_ENV === '')) &&
+                                 !isCloudflarePages && 
+                                 (!this.r2 || !this.baseUrl);
       
       if (!this.r2 && !isLocalDevelopment) {
         return {
@@ -167,7 +172,8 @@ export class CloudflareImageStorage {
         };
       }
       
-      if (!this.r2 && isLocalDevelopment) {
+      // Use local fallback in development mode (even if R2 is available but no baseUrl)
+      if (isLocalDevelopment) {
         // Local development fallback - save to public/images/uploads
         try {
           // Convert file to buffer
@@ -203,6 +209,7 @@ export class CloudflareImageStorage {
           };
         } catch (error) {
           const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+          console.error('Failed to save file locally:', errorMessage);
           return {
             success: false,
             error: `Failed to save file locally: ${errorMessage}`

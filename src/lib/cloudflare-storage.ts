@@ -29,19 +29,24 @@ const FacilitySchema = z.object({
 });
 
 const PropertySchema = z.object({
+  id: z.string().optional(),
   title: z.string(),
   description: z.string(),
   price: z.string(),
   features: z.array(z.string()),
-  image: ImageSchema
+  image: ImageSchema,
+  available: z.boolean().optional()
 });
 
 const ReviewSchema = z.object({
+  id: z.string().optional(),
   name: z.string(),
   rating: z.number().min(1).max(5),
   comment: z.string(),
   date: z.string(),
-  location: z.string().optional()
+  location: z.string().optional(),
+  title: z.string().optional(),
+  verified: z.boolean().optional()
 });
 
 const SocialLinkSchema = z.object({
@@ -97,6 +102,12 @@ const ContentSchema = z.object({
   propertySales: z.object({
     title: z.string(),
     subtitle: z.string(),
+    description: z.string().optional(),
+    backgroundImage: z.object({
+      src: z.string().url().or(z.string().startsWith('/')).or(z.string().startsWith('#')),
+      alt: z.string(),
+      opacity: z.number().optional()
+    }).optional(),
     properties: z.array(PropertySchema)
   }).optional(),
   reviews: z.object({
@@ -128,7 +139,14 @@ const ContentSchema = z.object({
   footer: z.object({
     companyName: z.string(),
     description: z.string(),
-    copyright: z.string()
+    copyright: z.string(),
+    contact: z.object({
+      phone: z.string(),
+      email: z.string().email(),
+      address: z.string()
+    }).optional(),
+    quickLinks: z.array(LinkSchema).optional(),
+    socialLinks: z.array(SocialLinkSchema).optional()
   }).optional(),
   pages: z.object({
     about: z.object({
@@ -208,7 +226,7 @@ const ContentSchema = z.object({
         }).optional()
       }).optional()
     }).optional(),
-    staticCaravans: z.object({
+    "static-caravans": z.object({
       hero: z.object({
         title: z.string(),
         subtitle: z.string(),
@@ -230,6 +248,18 @@ const ContentSchema = z.object({
         }).optional()
       }).optional()
     }).optional()
+  }).optional(),
+  site_name: z.string().optional(),
+  site_description: z.string().optional(),
+  social_media: z.object({
+    facebook: z.string().optional(),
+    instagram: z.string().optional(),
+    tripadvisor: z.string().optional()
+  }).optional(),
+  footer_logos: z.array(z.any()).optional(),
+  _metadata: z.object({
+    lastUpdated: z.string().optional(),
+    version: z.number().optional()
   }).optional()
 });
 
@@ -723,6 +753,64 @@ export class CloudflareStorage {
           }
         ],
         copyright: "© 2025 Lamb Cottage Caravan Park. All rights reserved."
+      },
+      pages: {
+        about: {
+          title: "About Lamb Cottage Caravan Park",
+          description: "Learn about our family-run caravan park and our commitment to providing exceptional countryside holidays.",
+          hero: {
+            title: "About Us",
+            subtitle: "Discover the story behind Lamb Cottage Caravan Park",
+            backgroundImage: {
+              src: "",
+              alt: "About us background",
+              opacity: 0.4
+            }
+          }
+        },
+        contact: {
+          title: "Contact Lamb Cottage Caravan Park",
+          description: "Get in touch with us for bookings, enquiries, or any questions about your stay.",
+          hero: {
+            title: "Contact Us",
+            subtitle: "We're here to help with all your enquiries",
+            backgroundImage: {
+              src: "",
+              alt: "Contact us background",
+              opacity: 0.4
+            }
+          }
+        },
+        facilities: {
+          title: "Facilities at Lamb Cottage Caravan Park",
+          description: "Discover all the amenities and facilities available during your stay with us.",
+          hero: {
+            title: "Our Facilities",
+            subtitle: "Everything you need for a comfortable stay",
+            backgroundImage: {
+              src: "",
+              alt: "Facilities background",
+              opacity: 0.4
+            }
+          }
+        },
+        "static-caravans": {
+          title: "Static Caravans for Sale",
+          description: "Discover our selection of quality static caravans available for purchase.",
+          hero: {
+            title: "Static Caravans for Sale",
+            subtitle: "Own your own piece of paradise",
+            backgroundImage: {
+              src: "",
+              alt: "Static caravans background",
+              opacity: 0.4
+            }
+          }
+        }
+      },
+      _metadata: {
+        lastUpdated: new Date().toISOString(),
+        version: Date.now()
       }
     };
   }

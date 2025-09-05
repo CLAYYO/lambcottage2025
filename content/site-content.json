@@ -1,7 +1,72 @@
 {
+  "topBar": {
+    "phone": "+44 1234 567890",
+    "email": "info@lambcottage.co.uk",
+    "address": "Lamb Cottage, Rural Cheshire, England",
+    "socialLinks": [
+      {
+        "platform": "Facebook",
+        "url": "https://facebook.com/lambcottage",
+        "icon": "facebook"
+      },
+      {
+        "platform": "Instagram",
+        "url": "https://instagram.com/lambcottage",
+        "icon": "instagram"
+      },
+      {
+        "platform": "TripAdvisor",
+        "url": "https://www.tripadvisor.com/Hotel_Review-g499515-d8592952-Reviews-Lamb_Cottage_Caravan_Park-Northwich_Cheshire_England.html",
+        "icon": "tripadvisor"
+      }
+    ]
+  },
+  "header": {
+    "logo": {
+      "src": "/images/logo.png",
+      "alt": "Lamb Cottage Caravan Park Logo",
+      "width": 120,
+      "height": 60
+    },
+    "siteName": "Lamb Cottage Caravan Park"
+  },
+  "navigation": {
+    "links": [
+      {
+        "text": "Home",
+        "url": "/",
+        "external": false
+      },
+      {
+        "text": "Facilities",
+        "url": "/#facilities",
+        "external": false
+      },
+      {
+        "text": "Property Sales",
+        "url": "/#property-sales",
+        "external": false
+      },
+      {
+        "text": "Reviews",
+        "url": "/#reviews",
+        "external": false
+      },
+      {
+        "text": "Contact",
+        "url": "/#contact",
+        "external": false
+      },
+      {
+        "text": "Book Now",
+        "url": "/#booking",
+        "external": false
+      }
+    ]
+  },
   "hero": {
-    "title": "Welcome to Lamb Cottage Caravan Park",
-    "subtitle": "Award-winning adults-only caravan park set in 7½ acres of meticulously maintained lawns and landscaped grounds in the heart of Cheshire.",
+    "title": "Test Title Updated",
+    "subtitle": "Test Subtitle Updated",
     "ctaButton": {
       "text": "Book Your Stay",
       "url": "https://lambcottage.campmanager.com/19567/Check-Availability/"
@@ -9,7 +74,7 @@
     "backgroundImage": {
       "src": "/lamb-cottage-hero.jpg",
       "alt": "Lamb Cottage Caravan Park",
-      "opacity": "0.4",
+      "opacity": 0.4,
       "dimensions": {
         "width": 1920,
         "height": 600,
@@ -36,7 +101,7 @@
     "backgroundImage": {
       "src": "/images/property-placeholder.jpg",
       "alt": "Facilities background",
-      "opacity": "0.3"
+      "opacity": 0.3
     },
     "items": [
       {
@@ -168,6 +233,14 @@
       }
     ]
   },
+  "contact": {
+    "title": "Contact Us",
+    "subtitle": "Get in touch with our friendly team",
+    "phone": "01606 781 234",
+    "email": "info@lambcottage.com",
+    "address": "Lamb Cottage Caravan Park, Cheshire",
+    "hours": "9:00 AM - 5:00 PM"
+  },
   "bookingBanner": {
     "title": "Ready to Book Your Stay?",
     "subtitle": "Experience the tranquility of our adults-only caravan park",
@@ -181,5 +254,56 @@
       "text": "Book Now",
       "url": "/contact"
     }
+  },
+  "footer": {
+    "companyName": "Lamb Cottage Caravan Park",
+    "description": "Your perfect Cheshire countryside retreat",
+    "contact": {
+      "phone": "+44 1234 567890",
+      "email": "info@lambcottage.co.uk",
+      "address": "Lamb Cottage, Rural Cheshire, England"
+    },
+    "quickLinks": [
+      {
+        "text": "Home",
+        "url": "/",
+        "external": false
+      },
+      {
+        "text": "Facilities",
+        "url": "/#facilities",
+        "external": false
+      },
+      {
+        "text": "Contact",
+        "url": "/#contact",
+        "external": false
+      }
+    ],
+    "socialLinks": [
+      {
+        "platform": "Facebook",
+        "url": "https://facebook.com/lambcottage",
+        "icon": "facebook"
+      },
+      {
+        "platform": "Instagram",
+        "url": "https://instagram.com/lambcottage",
+        "icon": "instagram"
+      }
+    ],
+    "copyright": "© 2025 Lamb Cottage Caravan Park. All rights reserved."
+  },
+  "site_name": "Lamb Cottage Caravan Park",
+  "site_description": "Award-winning adults-only caravan park in Cheshire",
+  "social_media": {
+    "facebook": "",
+    "instagram": "",
+    "tripadvisor": ""
+  },
+  "footer_logos": [],
+  "_metadata": {
+    "lastUpdated": "2025-09-05T14:52:57.077Z",
+    "version": 1757083977077
   }
 }

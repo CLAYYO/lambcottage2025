@@ -2,10 +2,12 @@
   "site_name": "Lamb Cottage Caravan Park",
   "site_description": "Award-winning adults-only caravan park in Cheshire",
   "contact": {
-    "phone": "",
-    "email": "",
-    "address": "",
-    "hours": ""
+    "title": "Contact Us",
+    "subtitle": "Get in touch with our friendly team",
+    "phone": "01606 781 234",
+    "email": "info@lambcottage.com",
+    "address": "Lamb Cottage Caravan Park, Cheshire",
+    "hours": "9:00 AM - 5:00 PM"
   },
   "social_media": {
     "facebook": "",
