@@ -65,8 +65,8 @@
     ]
   },
   "hero": {
-    "title": "Test Save Complete",
-    "subtitle": "Validation Fixed Successfully",
+    "title": "API Test Save",
+    "subtitle": "Testing validation directly",
     "ctaButton": {
       "text": "Book Your Stay",
       "url": "https://lambcottage.campmanager.com/19567/Check-Availability/"
@@ -357,7 +357,7 @@
   },
   "footer_logos": [],
   "_metadata": {
-    "lastUpdated": "2025-09-05T15:33:59.768Z",
-    "version": 1757086439768
+    "lastUpdated": "2025-09-05T16:27:26.674Z",
+    "version": 1757089646674
   }
 }
